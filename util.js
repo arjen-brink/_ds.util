@@ -1,6 +1,8 @@
 /**
- * The Digital-Strategies GTM Utilities library provides a set of helper functions
- * that allow for faster GTM development.
+ * The Digital-Strategies datalayer and utilities library provides a datalayer, 
+ * set of util functions and event bus to help with efficient FE development in 
+ * async environments.
+ * Major thankyou to Ron Pash for defining the structure for event handling
  */
 
 window._ds = window._ds || {};
