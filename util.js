@@ -23,7 +23,7 @@ window._ds.util = this;
  * //send an event with category, action and label
  * _ds.util.ga_event('category','action','label')
  *
- * //send an event with category, label and custom dimension and custom metric
+ * //send an event with category, action and custom dimension and custom metric
  * _ds.util.ga_event('category','action', {
  *   'cd1':'value1',
  *   'cm15':'value15'
@@ -222,6 +222,29 @@ this.getParam = function (paramName, url) {
   return res ? res[1] : undefined;
 
 }
+
+/**
+ * Function to checks if an element is in viewport
+ * type indicates if the element should be partly in view or full.
+ * defaults to full. 
+ * @param {string} elem - The html element to check
+ * @param {boolean} partial - If true, the element only needs to be in the viewport partly  
+ */
+
+function isInViewport(elem, partial) {
+  var factor = 1;
+  if (partial) {
+      factor = 1.5;
+  }
+  var bounding = elem.getBoundingClientRect();
+  return (
+      bounding.top >= -((window.innerHeight || document.documentElement.clientHeight) / factor) &&
+      bounding.left >= 0 &&
+      bounding.bottom <= ((window.innerHeight || document.documentElement.clientHeight) * factor) &&
+      bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+};
+
 
 
 //clean url from e.g. pii
