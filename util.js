@@ -231,7 +231,7 @@ this.getParam = function (paramName, url) {
  * @param {boolean} partial - If true, the element only needs to be in the viewport partly  
  */
 
-function isInViewport(elem, partial) {
+this.isInViewport = function(elem, partial) {
   var factor = 1;
   if (partial) {
       factor = 1.5;
