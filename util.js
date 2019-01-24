@@ -245,8 +245,6 @@ this.isInViewport = function(elem, partial) {
   );
 };
 
-
-
 //clean url from e.g. pii
 //args: url to clean and query params to filter besides the default
 this.cleanUrl = function (url, trailingSlash, addFilterParams) {
