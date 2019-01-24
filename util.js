@@ -249,20 +249,28 @@ this.isInViewport = function(elem, partial) {
 
 //clean url from e.g. pii
 //args: url to clean and query params to filter besides the default
-this.cleanUrl = function (url, addFilterParams) {
+this.cleanUrl = function (url, trailingSlash, addFilterParams) {
   // List of query-variable names that need to be removed
   var names = ['userid', 'user_id', 'login', 'username', 'mail', 'email', 'e-mail', 'user','password'];
   if (addFilterParams) {
     names = names.concat(qp);
   }
 
-  var regex = new RegExp("([\\?\x26](" + names.join("|") + ")\x3d)([^\x26#]*)", "ig");
-  var url = url.replace(regex, '$1removed');
+  // Add trailing slashes, defaults to true
+  if(typeof trailingSlash == 'undefined' || trailingSlash === true){
+    var regex_trailingslash = new RegExp(/\/?(\?|#|$)/);
+    url = url.replace(regex_trailingslash, '/$1');
+  }
+
+  var regex_pii = new RegExp("([?&#](" + names.join("|") + ")\x3d)([^&#]*)", "ig");
+  url = url.replace(regex_pii, '$1removed');
+
+  // When question mark is directly followed by ampersand, replace with questionmark mark only.
+  url = url.replace(/\?&/, '?');
 
   // When last character results in a '?','&' or '#', remove it too.
-  if (/[?|&|#]$/.test(url)) url = url.replace(/[?|&]$/, '');
-  // When question mark is directly followed by ampersand, replace with question mark only.
-  if (/.*\?&.*/.test(url)) url = url.replace(/\?&/, '?');
+  url = url.replace(/[?|&]$/, '');
+
   // Return the cleaned url, without whitespaces
   return url.trim();
 };
